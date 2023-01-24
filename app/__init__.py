@@ -28,6 +28,10 @@ def create_app():
     # Register Blueprints here
     # from .routes import example_bp
     # app.register_blueprint(example_bp)
+    from .routes import word_bp, user_bp
+    app.register_blueprint(word_bp)
+    app.register_blueprint(user_bp)
+    
 
     CORS(app)
     return app
