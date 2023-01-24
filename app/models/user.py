@@ -11,12 +11,12 @@ class User(db.Model):
             "id":self.user_id,
             "email":self.email,
             "password":self.password,
-            # "words":self.get_words_list()
+            "words":self.get_words_list()
         }
     
-    # def get_words_string(self):
-    #     string_of_words = ""
-    #     for word in self.words:
-    #         # list_of_cards.append(card.to_dict())
-    #         string_of_words+=word.to_dict().description +" "
-    #     return string_of_words[:-1]
+    def get_words_string(self):
+        string_of_words = ""
+        for word in self.words:
+            # list_of_cards.append(card.to_dict())
+            string_of_words+=word.to_dict().description +" "
+        return string_of_words[:-1]
