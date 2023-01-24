@@ -1,4 +1,4 @@
-# Inspiration Board: Back-end Layer
+# Feeling Well App: Back-end Layer
 
 This scaffold includes the following:
 
@@ -32,7 +32,7 @@ This file also has a comment to define a Blueprint. Feel free to delete it.
 
 ## `app/models` Directory
 
-This project already includes `app/models/board.py` and `app/models/card.py`, to anticipate the models `Board` and `Card`.
+This project already includes `app/models/word.py` and `app/models/user.py`, to anticipate the models `Word` and `User`.
 
 Both files already import `db`, for convenience!
 
