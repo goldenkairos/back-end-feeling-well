@@ -1,7 +1,13 @@
-from flask import Blueprint, request, jsonify, make_response, abort
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
+import sys,os #specific the path to the current directory
+os.chdir(sys.path[0]) #using os.changedirectory to the current path
+
+from flask import Blueprint, request, jsonify, make_response, abort, send_file
 from app import db
 from app.models.word import Word
 from app.models.user import User
+
 
 # example_bp = Blueprint('example_bp', __name__)
 word_bp = Blueprint('word',__name__,url_prefix='/words')
@@ -14,8 +20,24 @@ def get_all_words():
     string_of_words = ""
     for word in words:
         # list_of_cards.append(card.to_dict())
-        string_of_words+=word.to_dict()["description"] +" "
-    return jsonify(string_of_words[:-1]), 200
+        string_of_words+=word.to_dict()["description"] + " "
+
+    wc = WordCloud(
+        background_color = 'white',
+        height = 400,
+        width=400,
+        contour_width=3,colormap='rainbow'
+    )
+
+    wc.generate(string_of_words)
+
+    #store to file
+    return wc.to_file('wordcloud_output.png')
+
+    # return jsonify(string_of_words[:-1]), 200
+
+    # return send_file('wordcloud_output.png', mimetype='image/png'), 200
+
 
 #POST route for word
 @word_bp.route("",methods=["POST"])
