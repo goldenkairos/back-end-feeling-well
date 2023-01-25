@@ -23,7 +23,11 @@ def count_words(words):
         output_words[word] = output_words.get(word, 0) + 1
     return output_words
     
-
+def validate_word(description):
+    chosen_word = Word.query.get(description)
+    if chosen_word is None:
+        return abort(make_response({"msg": f"Could not find word: {description}"}, 404))
+    return chosen_word
 
 #GET route for ALL words
 @word_bp.route("",methods=["GET"])
@@ -52,6 +56,20 @@ def post_word():
     db.session.add(new_word)
     db.session.commit()
     return jsonify(new_word.to_dict()),201
+
+
+#DELETE route for word
+# @word_bp.route("/<description>",methods=["DELETE"])
+# def delete_word(description):
+#     chosen_word = validate_word(description)
+#     db.session.delete(chosen_word)
+#     db.session.commit()
+#     return jsonify({"Details":f'{description} successully deleted'}), 200
+
+
+
+
+
 
 
 
