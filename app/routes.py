@@ -13,28 +13,26 @@ from app.models.user import User
 word_bp = Blueprint('word',__name__,url_prefix='/words')
 user_bp = Blueprint('user',__name__,url_prefix='/users')
 
+
+def count_words(words):
+    list_of_words = []
+    output_words = {}
+    for word in words:
+        list_of_words.append(word.to_dict()["description"])
+    for word in list_of_words:
+        output_words[word] = output_words.get(word, 0) + 1
+    return output_words
+    
+
+
 #GET route for ALL words
 @word_bp.route("",methods=["GET"])
 def get_all_words():
     words = Word.query.all()
-    string_of_words = ""
-    for word in words:
-        # list_of_cards.append(card.to_dict())
-        string_of_words+=word.to_dict()["description"] + " "
+    result = count_words(words)
+    return jsonify(result), 200
 
-    # wc = WordCloud(
-    #     background_color = 'white',
-    #     height = 400,
-    #     width=400,
-    #     contour_width=3,colormap='rainbow'
-    # )
-
-    # wc.generate(string_of_words)
-
-    #store to file
-    # return wc.to_file('wordcloud_output.png')
-
-    return jsonify(string_of_words[:-1]), 200
+    # return jsonify(string_of_words[:-1]), 200
 
     # return send_file('wordcloud_output.png', mimetype='image/png'), 200
 
@@ -54,3 +52,6 @@ def post_word():
     db.session.add(new_word)
     db.session.commit()
     return jsonify(new_word.to_dict()),201
+
+
+
