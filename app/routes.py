@@ -22,19 +22,19 @@ def get_all_words():
         # list_of_cards.append(card.to_dict())
         string_of_words+=word.to_dict()["description"] + " "
 
-    wc = WordCloud(
-        background_color = 'white',
-        height = 400,
-        width=400,
-        contour_width=3,colormap='rainbow'
-    )
+    # wc = WordCloud(
+    #     background_color = 'white',
+    #     height = 400,
+    #     width=400,
+    #     contour_width=3,colormap='rainbow'
+    # )
 
-    wc.generate(string_of_words)
+    # wc.generate(string_of_words)
 
     #store to file
-    return wc.to_file('wordcloud_output.png')
+    # return wc.to_file('wordcloud_output.png')
 
-    # return jsonify(string_of_words[:-1]), 200
+    return jsonify(string_of_words[:-1]), 200
 
     # return send_file('wordcloud_output.png', mimetype='image/png'), 200
 
