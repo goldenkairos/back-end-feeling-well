@@ -1,9 +1,4 @@
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS
-import sys,os #specific the path to the current directory
-os.chdir(sys.path[0]) #using os.changedirectory to the current path
-
-from flask import Blueprint, request, jsonify, make_response, abort, send_file
+from flask import Blueprint, request, jsonify, make_response, abort
 from app import db
 from app.models.word import Word
 from app.models.user import User
@@ -35,10 +30,6 @@ def get_all_words():
     words = Word.query.all()
     result = count_words(words)
     return jsonify(result), 200
-
-    # return jsonify(string_of_words[:-1]), 200
-
-    # return send_file('wordcloud_output.png', mimetype='image/png'), 200
 
 
 #POST route for word
