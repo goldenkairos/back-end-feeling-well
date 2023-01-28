@@ -25,6 +25,7 @@ def validate_word(description):
     return chosen_word
 
 #GET route for ALL words
+#http://127.0.0.1:5000/words
 @word_bp.route("",methods=["GET"])
 def get_all_words():
     words = Word.query.all()
@@ -33,6 +34,8 @@ def get_all_words():
 
 
 #POST route for word
+#http://127.0.0.1:5000/words
+#in Postman {"description":"any word here"}
 @word_bp.route("",methods=["POST"])
 def post_word():
     request_body = request.get_json()
@@ -49,13 +52,18 @@ def post_word():
     return jsonify(new_word.to_dict()),201
 
 
-#DELETE route for word
-# @word_bp.route("/<description>",methods=["DELETE"])
-# def delete_word(description):
-#     chosen_word = validate_word(description)
-#     db.session.delete(chosen_word)
-#     db.session.commit()
-#     return jsonify({"Details":f'{description} successully deleted'}), 200
+# DELETE route for word
+#sample route: http://127.0.0.1:5000/words/Excited
+@word_bp.route("/<description>",methods=["DELETE"])
+def delete_word(description):
+    # chosen_word = validate_word(description)
+    chosen_words = Word.query.filter(Word.description==description).all()
+    
+    for word in chosen_words:        
+        db.session.delete(word)        
+        db.session.commit()
+        
+    return jsonify({"Details":f'{description} successully deleted'}), 200
 
 
 
