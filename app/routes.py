@@ -52,10 +52,10 @@ def post_word():
     return jsonify(new_word.to_dict()),201
 
 
-# DELETE route for word
+# DELETE route for one word
 #sample route: http://127.0.0.1:5000/words/Excited
 @word_bp.route("/<description>",methods=["DELETE"])
-def delete_word(description):
+def delete_one_word(description):
     # chosen_word = validate_word(description)
     chosen_words = Word.query.filter(Word.description==description).all()
     
@@ -65,7 +65,16 @@ def delete_word(description):
         
     return jsonify({"Details":f'{description} successully deleted'}), 200
 
-
+#DELETE route for ALL words
+@word_bp.route("/all",methods=['DELETE'])
+def delete_all_words():
+    all_words = Word.query.all()
+    
+    for word in all_words:
+        db.session.delete(word)
+        db.session.commit()
+    
+    return jsonify({"Details":f'All words have been successully deleted'}), 200
 
 
 
