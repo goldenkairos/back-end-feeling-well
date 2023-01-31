@@ -24,7 +24,7 @@ def validate_word(description):
         return abort(make_response({"msg": f"Could not find word: {description}"}, 404))
     return chosen_word
 
-#GET route for ALL words
+#GET route for ALL words for ALL users
 #http://127.0.0.1:5000/words
 @word_bp.route("",methods=["GET"])
 def get_all_words():
@@ -33,7 +33,7 @@ def get_all_words():
     return jsonify(result), 200
 
 
-#POST route for word
+#POST route for word for any user
 #http://127.0.0.1:5000/words
 #in Postman {"description":"any word here"}
 @word_bp.route("",methods=["POST"])
@@ -76,8 +76,18 @@ def delete_all_words():
     
     return jsonify({"Details":f'All words have been successully deleted'}), 200
 
-
-
-
+#POST route for new user
+@user_bp.route("",methods=['POST'])
+def create_one_user():
+    request_body = request.get_json()
+    try:
+        new_user=User(
+            user_uid=request_body["user_uid"]            
+        )
+    except:
+        return abort(make_response({"details": "Invalid data"}, 400))
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"user":new_user.to_dict()}),201
 
 

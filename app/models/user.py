@@ -2,16 +2,24 @@ from app import db
 
 class User(db.Model):
     user_id=db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email=db.Column(db.String)
-    password=db.Column(db.String)
+    user_uid=db.Column(db.String)
+    # email=db.Column(db.String)
+    # password=db.Column(db.String)
     words = db.relationship('Word', back_populates='user', lazy=True)
     
+    def to_dict_relationship(self):
+        return {
+            "id":self.user_id,
+            "user_uid":self.user_uid,
+            # "email":self.email,
+            # "password":self.password,
+            "words":self.get_words_list()
+        }
+        
     def to_dict(self):
         return {
             "id":self.user_id,
-            "email":self.email,
-            "password":self.password,
-            "words":self.get_words_list()
+            "user_uid":self.user_uid
         }
     
     def get_words_string(self):
