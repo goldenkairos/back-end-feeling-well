@@ -19,7 +19,7 @@ def create_app():
 
     # Import models here for Alembic setup
     # from app.models.ExampleModel import ExampleModel
-    from app.models.user import User
+    from app.models.account import Account
     from app.models.word import Word
 
     db.init_app(app)
@@ -28,9 +28,9 @@ def create_app():
     # Register Blueprints here
     # from .routes import example_bp
     # app.register_blueprint(example_bp)
-    from .routes import word_bp, user_bp
+    from .routes import word_bp, account_bp
     app.register_blueprint(word_bp)
-    app.register_blueprint(user_bp)
+    app.register_blueprint(account_bp)
     
 
     CORS(app)

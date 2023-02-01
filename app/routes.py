@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify, make_response, abort
 from app import db
 from app.models.word import Word
-from app.models.user import User
+from app.models.account import Account
 
 
 # example_bp = Blueprint('example_bp', __name__)
 word_bp = Blueprint('word',__name__,url_prefix='/words')
-user_bp = Blueprint('user',__name__,url_prefix='/users')
+account_bp = Blueprint('user',__name__,url_prefix='/users')
 
 
 def count_words(words):
@@ -76,18 +76,18 @@ def delete_all_words():
     
     return jsonify({"Details":f'All words have been successully deleted'}), 200
 
-#POST route for new user
-@user_bp.route("",methods=['POST'])
-def create_one_user():
-    request_body = request.get_json()
-    try:
-        new_user=User(
-            user_uid=request_body["user_uid"]            
-        )
-    except:
-        return abort(make_response({"details": "Invalid data"}, 400))
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"user":new_user.to_dict()}),201
+# #POST route for new user
+# @account_bp.route("",methods=['POST'])
+# def create_one_user():
+#     request_body = request.get_json()
+#     try:
+#         new_user=User(
+#             user_uid=request_body["user_uid"]            
+#         )
+#     except:
+#         return abort(make_response({"details": "Invalid data"}, 400))
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return jsonify({"user":new_user.to_dict()}),201
 
 
