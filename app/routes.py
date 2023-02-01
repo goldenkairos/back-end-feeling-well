@@ -76,18 +76,18 @@ def delete_all_words():
     
     return jsonify({"Details":f'All words have been successully deleted'}), 200
 
-# #POST route for new user
-# @account_bp.route("",methods=['POST'])
-# def create_one_user():
-#     request_body = request.get_json()
-#     try:
-#         new_user=User(
-#             user_uid=request_body["user_uid"]            
-#         )
-#     except:
-#         return abort(make_response({"details": "Invalid data"}, 400))
-#     db.session.add(new_user)
-#     db.session.commit()
-#     return jsonify({"user":new_user.to_dict()}),201
+#POST route for new account
+@account_bp.route("",methods=['POST'])
+def create_one_user():
+    request_body = request.get_json()
+    try:
+        new_account=Account(
+            account_uid=request_body["account_uid"]            
+        )
+    except:
+        return abort(make_response({"details": "Invalid data"}, 400))
+    db.session.add(new_account)
+    db.session.commit()
+    return jsonify({"account":new_account.to_dict()}),201
 
 
