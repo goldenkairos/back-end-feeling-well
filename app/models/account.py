@@ -22,9 +22,9 @@ class Account(db.Model):
             "account_uid":self.account_uid
         }
     
-    def get_words_string(self):
-        string_of_words = ""
+    def get_words_list(self):
+        list_of_words = []
         for word in self.words:
             # list_of_cards.append(card.to_dict())
-            string_of_words+=word.to_dict().description +" "
-        return string_of_words[:-1]
+            list_of_words.append(word.to_dict()["description"])
+        return list_of_words
