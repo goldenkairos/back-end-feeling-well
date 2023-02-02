@@ -132,7 +132,7 @@ def create_one_word_in_account(account_uid):
     return jsonify({"words": new_word.to_dict()}),201
 
 #GET route for All words for One Account uid
-@account_bp.route("/<account_uid>/words", methods=["GET"])
+@account_bp.route("/<account_uid>/all_words", methods=["GET"])
 def get_all_words_in_a_account(account_uid):
     account=validate_account(account_uid)
     result = account.to_dict_relationship()
@@ -145,23 +145,26 @@ def get_all_words_in_a_account(account_uid):
 
 # DELETE route for one word in One Account
 #sample route: http://127.0.0.1:5000/words/Excited
-@word_bp.route("/<description>",methods=["DELETE"])
-def delete_one_word(description):
+@account_bp.route("/<account_uid>/<description>",methods=["DELETE"])
+def delete_one_word_in_an_account(account_uid, description):
     # chosen_word = validate_word(description)
-    chosen_words = Word.query.filter(Word.description==description).all()
+    chosen_account = validate_account(account_uid)
+    for word in chosen_account.words:
+        if word.description == description:
+
+    # chosen_words = Word.query.filter(Word.description==description).all()
     
-    for word in chosen_words:        
-        db.session.delete(word)        
-        db.session.commit()
+    # for word in chosen_words:        
+            db.session.delete(word)        
+            db.session.commit()
         
     return jsonify({"Details":f'{description} successully deleted'}), 200
 
 #DELETE route for ALL words in One Account
-@word_bp.route("/all",methods=['DELETE'])
-def delete_all_words():
-    all_words = Word.query.all()
-    
-    for word in all_words:
+@account_bp.route("/<account_uid>/all_words",methods=['DELETE'])
+def delete_all_words_in_an_account(account_uid):
+    chosen_account = validate_account(account_uid)
+    for word in chosen_account.words:
         db.session.delete(word)
         db.session.commit()
     
