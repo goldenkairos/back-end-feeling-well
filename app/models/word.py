@@ -13,3 +13,10 @@ class Word(db.Model):
             "description":self.description
         }
         return dict
+    
+    def words_uid_to_dict(self):
+        dict ={
+            "description": self.description,
+            "account_uid":self.account_uid
+        }
+        return dict

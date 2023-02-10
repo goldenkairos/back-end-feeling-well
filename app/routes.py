@@ -85,6 +85,35 @@ def delete_all_words():
     
     return jsonify({"Details":f'All words have been successully deleted'}), 200
 
+#GET route for All words with account_uid
+@word_bp.route("/words-accounts",methods=["GET"])
+def get_all_words_accounts():
+    words = Word.query.all()
+    result = []
+    for word in words:
+        result.append(word.words_uid_to_dict())
+    return jsonify(result), 200
+
+#GET route for ALL words with no account_uid
+@word_bp.route("/no_uid_all_words",methods=["GET"])
+def get_all_words_no_uid():
+    words = Word.query.filter(Word.account_uid==None).all()
+    result = []
+    for word in words:
+        result.append(word.words_uid_to_dict())
+    return jsonify(result), 200
+
+# DELETE route for ALL words with no userID
+@word_bp.route("/no_uid_all_words",methods=['DELETE'])
+def delete_all_words_no_uid():
+    all_words = Word.query.filter(Word.account_uid==None).all()
+    
+    for word in all_words:
+        db.session.delete(word)
+        db.session.commit()
+    
+    return jsonify({"Details":f'All words have been successully deleted'}), 200
+
 #POST route for new account
 @account_bp.route("",methods=['POST'])
 def create_one_user():
