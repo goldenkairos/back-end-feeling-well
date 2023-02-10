@@ -33,7 +33,7 @@ def validate_account(account_uid):
 
 
 
-#GET route for ALL words for ALL users
+#GET route for ALL words for ALL users counting words
 #http://127.0.0.1:5000/words
 @word_bp.route("",methods=["GET"])
 def get_all_words():
@@ -102,6 +102,15 @@ def get_all_words_no_uid():
     for word in words:
         result.append(word.words_uid_to_dict())
     return jsonify(result), 200
+
+#GET route for ALL words for non user counting words
+#http://127.0.0.1:5000/words
+@word_bp.route("/all_words_non_user",methods=["GET"])
+def get_all_words_non_user():
+    words = Word.query.filter(Word.account_uid==None).all()
+    result = count_words(words)
+    return jsonify(result), 200
+
 
 # DELETE route for ALL words with no userID
 @word_bp.route("/no_uid_all_words",methods=['DELETE'])
