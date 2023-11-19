@@ -39,4 +39,4 @@ toml==0.10.2
 tomli==2.0.1
 urllib3==1.26.4
 Werkzeug==1.0.1
-wordcloud==1.8.2.2
+wordcloud==1.9.1.1
