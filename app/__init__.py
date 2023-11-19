@@ -34,4 +34,9 @@ def create_app():
     
 
     CORS(app)
+    
+    @app.before_request
+    def before_request():
+        db.session.remove()
+        
     return app
